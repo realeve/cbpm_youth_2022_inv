@@ -23,7 +23,7 @@ const config: IConfig = {
       {
         dva: true,
         dynamicImport: { webpackChunkName: true },
-        title: '点亮“微心愿” · 助力“微梦想”',
+        title: '2022年度中国印钞造币行业青年职工调查问卷',
         dll: false,
         routes: {
           exclude: [

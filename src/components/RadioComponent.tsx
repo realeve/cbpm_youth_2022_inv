@@ -46,7 +46,9 @@ const RadioComponent = function({
           {lib.alphaRange[value]}、{render(name)}
         </RadioItem>
       ))}
-      {state[key]?.includes(String(data.length - 1)) && <MoreState idx={key} {...props} />}
+      {props.showmore && state[key]?.includes(String(data.length - 1)) && (
+        <MoreState idx={key} {...props} />
+      )}
     </List>
   );
 };
