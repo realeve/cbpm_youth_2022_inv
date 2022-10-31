@@ -1,6 +1,5 @@
 // import React from 'react';
 import React, { useState } from 'react';
-// import { IQuestion } from '../pages/Paper';
 import { Button, List } from 'antd-mobile';
 import * as lib from '@/utils/lib';
 import * as R from 'ramda';
@@ -9,7 +8,7 @@ import styles from './radioButon.less';
 
 const RadioItem = Checkbox.CheckboxItem; // Radio.RadioItem;
 
-interface IQuestion {
+export interface IQuestion {
   idx: number;
   title: string;
   data: any;

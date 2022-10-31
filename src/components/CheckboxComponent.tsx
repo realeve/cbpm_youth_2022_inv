@@ -1,8 +1,8 @@
 import React from 'react';
-import { IQuestion } from '../pages/Paper';
-import { List, Checkbox } from 'antd-mobile';
+import { IQuestion } from './RadioButon';
+import { List, Checkbox, InputItem } from 'antd-mobile';
 import * as lib from '@/utils/lib';
-
+import * as R from 'ramda';
 const CheckboxItem = Checkbox.CheckboxItem;
 
 const CheckboxComponent = function({
@@ -35,6 +35,15 @@ const CheckboxComponent = function({
           {lib.alphaRange[value]}、{name}
         </CheckboxItem>
       ))}
+      {props.showmore && state[key]?.includes(String(data.length - 1)) && (
+        <InputItem
+          value={typeof state[key] === 'undefined' ? undefined : '' + state[key]}
+          clear
+          onChange={val => {
+            console.log(val);
+          }}
+        />
+      )}
     </List>
   );
 };

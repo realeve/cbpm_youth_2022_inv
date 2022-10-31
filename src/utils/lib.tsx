@@ -92,10 +92,5 @@ export const parseAnswer = (
       curAnswer = alphaRange[Number(res)];
     }
   }
-  return (
-    <div style={showErr && curAnswer === '' ? { color: '#e23' } : {}}>
-      {title}
-      {/* <span> ( {curAnswer} ) </span> */}
-    </div>
-  );
+  return <div style={{ color: '#000', fontSize: 17 }}>{title}</div>;
 };

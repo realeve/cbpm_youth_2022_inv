@@ -1,5 +1,5 @@
 import React from 'react';
-import { IQuestion } from '../pages/Paper';
+import { IQuestion } from './RadioButon';
 import * as lib from '@/utils/lib';
 import * as R from 'ramda';
 import { Picker, List } from 'antd-mobile';

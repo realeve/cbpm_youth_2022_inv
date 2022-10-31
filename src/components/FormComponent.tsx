@@ -11,10 +11,11 @@ import dayjs from 'dayjs';
 export interface IPaper {
   title: string;
   data: string | string[];
-  subTitle?: string | string[];
+  subTitle?: string | string[] | null;
   type?: string;
   cascade?: number;
-  answer: number;
+  answer?: number;
+  showMore?: boolean;
   [key: string]: any;
 }
 export interface IPropsForm {
@@ -52,6 +53,8 @@ export default function FormComponent({
         showErr: !R.equals(showErr, {}),
         placeholder,
         type: valueType,
+        subTitle,
+        showMore: props?.showMore,
       };
 
       switch (type) {
@@ -62,14 +65,11 @@ export default function FormComponent({
         case 'select':
           return <Select {...prop} />;
         case 'checkbox':
-          if (typeof subTitle !== 'undefined' && typeof subTitle !== 'string') {
-          }
-          prop.title += props.length ? '' : '(可多选)';
-          return <CheckboxComponent {...prop} />;
-        case 'checkbox':
-          if (typeof subTitle !== 'undefined' && typeof subTitle !== 'string') {
-          }
-          prop.title += props.length ? '' : '(可多选)';
+          prop.title += props.length
+            ? ''
+            : props.maxLength
+            ? `(可多选${props.maxLength}项)`
+            : '(可多选)';
           return <CheckboxComponent {...prop} />;
         case 'group':
           if (typeof subTitle !== 'undefined' && typeof subTitle !== 'string') {

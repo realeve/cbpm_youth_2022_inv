@@ -1,24 +1,12 @@
 import React from 'react';
-// import { IQuestion } from '../pages/Paper';
-import { List } from 'antd-mobile';
+import { IQuestion } from './RadioButon';
+import { List, Checkbox } from 'antd-mobile';
 import * as lib from '@/utils/lib';
 import * as R from 'ramda';
-import { Checkbox } from 'antd-mobile';
 // const CheckboxItem = Checkbox.CheckboxItem;
 // 使用多选框组件的样式处理单选逻辑
 
 const RadioItem = Checkbox.CheckboxItem; // Radio.RadioItem;
-
-interface IQuestion {
-  idx: number;
-  title: string;
-  data: any;
-  onChange: (e: any) => void;
-  state: (string | string[])[];
-  showErr: boolean;
-  render?: (e: any) => void;
-  [key: string]: any;
-};
 
 const RadioComponent = function({
   idx: key,

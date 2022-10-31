@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styles from './main.less';
 import { connect } from 'dva';
-import { WhiteSpace, WingBlank } from 'antd-mobile';
+import { WhiteSpace, Button, WingBlank } from 'antd-mobile';
 import router from 'umi/router';
 import FormComponent from '@/components/FormComponent';
 import { formData } from './formData';
 
 const Index = () => {
   const [state, setState] = useState([]);
-  useEffect(() => {}, []);
+  const submit = () => {
+    console.log(state);
+  };
   return (
     <WingBlank className={styles.main}>
       <FormComponent
@@ -18,7 +20,11 @@ const Index = () => {
           console.log(e);
           setState(e);
         }}
-      ></FormComponent>
+      />
+      <WhiteSpace />
+      <Button type="primary" onClick={submit}>
+        提交
+      </Button>
     </WingBlank>
   );
 };
