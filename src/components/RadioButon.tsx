@@ -5,7 +5,6 @@ import * as lib from '@/utils/lib';
 import * as R from 'ramda';
 import { Checkbox } from 'antd-mobile';
 import styles from './radioButon.less';
-
 const RadioItem = Checkbox.CheckboxItem; // Radio.RadioItem;
 
 export interface IQuestion {

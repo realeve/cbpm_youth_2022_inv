@@ -8,16 +8,20 @@ import { formData } from './formData';
 
 const Index = () => {
   const [state, setState] = useState([]);
+  const [mState, setMState] = useState([]);
   const submit = () => {
-    console.log(state);
+    console.log(state, mState);
   };
   return (
     <WingBlank className={styles.main}>
       <FormComponent
         data={formData}
         state={state}
+        moreState={mState}
+        onMoreChange={e => {
+          setMState(e);
+        }}
         onChange={e => {
-          console.log(e);
           setState(e);
         }}
       />

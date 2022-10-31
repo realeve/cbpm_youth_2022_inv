@@ -15,7 +15,7 @@ export interface IPaper {
   type?: string;
   cascade?: number;
   answer?: number;
-  showMore?: boolean;
+  showmore?: boolean;
   [key: string]: any;
 }
 export interface IPropsForm {
@@ -24,6 +24,10 @@ export interface IPropsForm {
   state: any;
   showErr?: any;
   showKey?: boolean;
+  /** 更多（请注明) */
+  onMoreChange?: (e: string) => void;
+  /** 更多信息文字状态 */
+  moreState: any;
   [key: string]: any;
 }
 export default function FormComponent({
@@ -32,6 +36,8 @@ export default function FormComponent({
   showKey = true,
   state,
   showErr,
+  moreState,
+  onMoreChange,
 }: IPropsForm) {
   return data.map(
     (
@@ -53,13 +59,18 @@ export default function FormComponent({
         showErr: !R.equals(showErr, {}),
         placeholder,
         type: valueType,
-        subTitle,
-        showMore: props?.showMore,
       };
 
       switch (type) {
         case 'radio':
-          return <RadioComponent {...prop} />;
+          return (
+            <RadioComponent
+              moreState={moreState}
+              onMoreChange={onMoreChange}
+              showmore={props.showmore}
+              {...prop}
+            />
+          );
         case 'radiobtn':
           return <RadioButon {...prop} />;
         case 'select':
@@ -70,7 +81,14 @@ export default function FormComponent({
             : props.maxLength
             ? `(可多选${props.maxLength}项)`
             : '(可多选)';
-          return <CheckboxComponent {...prop} />;
+          return (
+            <CheckboxComponent
+              moreState={moreState}
+              onMoreChange={onMoreChange}
+              showmore={props.showmore}
+              {...prop}
+            />
+          );
         case 'group':
           if (typeof subTitle !== 'undefined' && typeof subTitle !== 'string') {
             return <NestRadio subTitle={subTitle} {...prop} />;
