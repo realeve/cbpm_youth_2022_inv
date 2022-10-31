@@ -132,7 +132,7 @@ export default function FormComponent({
                     (props.cascade && state[key - 1] == '1') || typeof val === 'undefined'
                       ? '无'
                       : val;
-                  nextState[key] = res.trim();
+                  nextState[key] = res;
                   prop.onChange(nextState);
                 }}
                 rows={3}
