@@ -1,11 +1,22 @@
-import { getCbpm2022Youth } from '@/utils/db';
+import { getCbpm2022Youth, getCbpm2022YouthResult } from '@/utils/db';
 import React, { useEffect, useState } from 'react';
 import { WhiteSpace, Button, WingBlank } from 'antd-mobile';
 import styles from './score.less';
+
+const handlePaper = data => {
+  return data;
+};
+
 export default () => {
   const [state, setState] = useState([]);
+
+  const [paper, setPaper] = useState([]);
   useEffect(() => {
     getCbpm2022Youth().then(setState);
+    getCbpm2022YouthResult().then(res => {
+      let data = handlePaper(res);
+      setPaper(data);
+    });
   }, []);
 
   return (

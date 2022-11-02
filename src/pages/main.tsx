@@ -82,17 +82,29 @@ const Index = ({ weixin, dispatch }) => {
       headimgurl: weixin.headimgurl,
       ...params,
     };
-    console.log(param);
-    const success = await db.addCbpm2022Youth(param).catch(e => false);
-    dispatch({
-      type: 'common/setStore',
-      payload: {
-        message: {
-          type: success ? 'success' : 'fail',
-          title: `提交${success ? '成功' : '失败'}`,
+    // console.log(param);
+    let success = await db.addCbpm2022Youth(param);
+    if (success == -1) {
+      dispatch({
+        type: 'common/setStore',
+        payload: {
+          message: {
+            type: 'success',
+            title: `您已参与本次活动`,
+          },
         },
-      },
-    });
+      });
+    } else {
+      dispatch({
+        type: 'common/setStore',
+        payload: {
+          message: {
+            type: success ? 'success' : 'fail',
+            title: `提交${success ? '成功' : '失败'}`,
+          },
+        },
+      });
+    }
     router.push('/success');
   };
   return (

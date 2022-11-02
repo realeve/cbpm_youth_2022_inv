@@ -85,7 +85,13 @@ export const addCbpm2022Youth: (params: {
   axios<TDbWrite>({
     url: '/440/68cce9137a.json',
     params,
-  }).then(({ data: [{ id }] }) => id);
+  })
+    .then(({ data: [{ id }] }) => id)
+    .catch(e => {
+      if (e['Error Message'].includes('Duplicate')) {
+        return -1;
+      }
+    });
 
 /**
  *   @database: { 微信开发 }
@@ -117,7 +123,7 @@ export const getCbpm2022YouthByOpenid: (openid: string) => Promise<number> = ope
  *   @database: { 微信开发 }
  *   @desc:     { 数据结果查询 }
  */
-export const getCbpm2022YouthResult: () => Promise<IAxiosState> = () =>
+export const getCbpm2022YouthResult = () =>
   axios({
     url: '/443/f96bb690d0.json',
-  });
+  }).then(res => res.data);
