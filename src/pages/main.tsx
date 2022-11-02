@@ -5,18 +5,19 @@ import { WhiteSpace, Button, WingBlank, Toast } from 'antd-mobile';
 import router from 'umi/router';
 import FormComponent from '@/components/FormComponent';
 import { formData } from './formData';
-
+import * as db from '@/utils/db';
 const checkPaper = (state: (string | null)[], mState: (string | null)[]) => {
   let valid = true,
     idx = 0;
   let answer = {};
-  while (valid) {
+  while (valid && idx < state.length) {
     let item = state[idx],
       formItem = formData[idx];
     // 检查题目完整性
     if (!item) {
       valid = false;
       Toast.fail(`第${idx + 1}道题目未填写`);
+      console.log(answer);
     } else {
       answer[`q${idx + 1}`] = Array.isArray(item) ? item.join(',') : item;
     }
@@ -38,18 +39,37 @@ const checkPaper = (state: (string | null)[], mState: (string | null)[]) => {
 
     idx++;
   }
-  console.log({ answer });
   return valid ? answer : false;
 };
 
-const Index = () => {
+const Index = ({ weixin, dispatch }) => {
   const [state, setState] = useState(new Array(formData.length));
   const [mState, setMState] = useState(new Array(formData.length));
-  const submit = () => {
-    console.log(state, mState);
+  const submit = async () => {
     // 检查数据
-    let valid = checkPaper(state, mState);
-    console.log(valid);
+    let params = checkPaper(state, mState);
+    if (!params) {
+      return;
+    }
+    let param = {
+      openid: weixin.openid,
+      sex: weixin.sex,
+      nickname: weixin.nickname,
+      headimgurl: weixin.headimgurl,
+      ...params,
+    };
+    console.log(param);
+    const success = await db.addCbpm2022Youth(param).catch(e => false);
+    dispatch({
+      type: 'common/setStore',
+      payload: {
+        message: {
+          type: success ? 'success' : 'fail',
+          title: `提交${success ? '成功' : '失败'}`,
+        },
+      },
+    });
+    router.push('/success');
   };
   return (
     <WingBlank className={styles.main}>
@@ -68,4 +88,4 @@ const Index = () => {
   );
 };
 
-export default connect()(Index);
+export default connect(({ common: { weixin } }) => ({ weixin }))(Index);

@@ -8,6 +8,10 @@ export default {
   state: {
     user: {},
     weixin: {},
+    message: {
+      type: 'success',
+      title: '提交成功'
+    }
   },
   reducers: {
     setStore,
