@@ -100,3 +100,15 @@ export const getCbpm2022Youth = () =>
       company: idx + 1 + '.' + item.company,
     })),
   );
+
+/**
+ *   @database: { 微信开发 }
+ *   @desc:     { 个人状态查询 }
+ */
+export const getCbpm2022YouthByOpenid: (openid: string) => Promise<number> = openid =>
+  axios({
+    url: '/442/d32c26e9c6.json',
+    params: {
+      openid,
+    },
+  }).then(res => res.rows);

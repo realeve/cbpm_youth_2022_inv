@@ -45,6 +45,18 @@ const checkPaper = (state: (string | null)[], mState: (string | null)[]) => {
 const Index = ({ weixin, dispatch }) => {
   const [state, setState] = useState(new Array(formData.length));
   const [mState, setMState] = useState(new Array(formData.length));
+
+  useEffect(() => {
+    if (!weixin.openid) {
+      return;
+    }
+    db.getCbpm2022YouthByOpenid(weixin.openid).then(success => {
+      if (success) {
+        Toast.success('您已参与该问卷');
+        router.push('/score');
+      }
+    });
+  }, [weixin.openid]);
   const submit = async () => {
     // 检查数据
     let params = checkPaper(state, mState);
