@@ -51,9 +51,21 @@ const Index = ({ weixin, dispatch }) => {
       return;
     }
     db.getCbpm2022YouthByOpenid(weixin.openid).then(success => {
+      // if (success) {
+      //   Toast.success('您已参与该问卷');
+      //   router.push('/score');
+      // }
       if (success) {
-        Toast.success('您已参与该问卷');
-        router.push('/score');
+        dispatch({
+          type: 'common/setStore',
+          payload: {
+            message: {
+              type: 'success',
+              title: `您已参与该问卷`,
+            },
+          },
+        });
+        router.push('/success');
       }
     });
   }, [weixin.openid]);

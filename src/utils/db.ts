@@ -112,3 +112,12 @@ export const getCbpm2022YouthByOpenid: (openid: string) => Promise<number> = ope
       openid,
     },
   }).then(res => res.rows);
+
+/**
+ *   @database: { 微信开发 }
+ *   @desc:     { 数据结果查询 }
+ */
+export const getCbpm2022YouthResult: () => Promise<IAxiosState> = () =>
+  axios({
+    url: '/443/f96bb690d0.json',
+  });

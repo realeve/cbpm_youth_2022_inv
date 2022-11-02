@@ -18,7 +18,7 @@ function NewPage() {
           为进一步做好集团公司青年工作，全面了解青年的思想状况，准确把握青年的思想动向，助力行业高质量发展。集团公司团委特进行本次调查问卷，希望聆听到你的真实声音。
         </p>
         <p className={styles.align_right}>共青团中国印钞造币集团有限公司委员会</p>
-        <p className={styles.align_right}>2022年10月31日</p>
+        <p className={styles.align_right}>2022年11月2日</p>
         <WhiteSpace size="lg" />
       </WingBlank>
       <WingBlank style={{ marginTop: 150 }}>
