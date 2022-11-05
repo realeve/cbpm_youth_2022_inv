@@ -1,5 +1,7 @@
 import { axios, IAxiosState, TDbWrite } from '@/utils/axios';
-import * as user from './user';
+import { formData } from '../pages/formData';
+import * as R from 'ramda';
+
 export interface IUserInfo {
   openid: string; // openid
   headimgurl: string; // 头像
@@ -100,12 +102,13 @@ export const addCbpm2022Youth: (params: {
 export const getCbpm2022Youth = () =>
   axios({
     url: '/441/521d5bd898.json',
-  }).then(res =>
-    res.data.map((item, idx) => ({
+  }).then(res => {
+    return res.data.map((item, idx) => ({
       ...item,
-      company: idx + 1 + '.' + item.company,
-    })),
-  );
+      name: idx + 1 + '.' + item.company.replace('有限公司', ''),
+      value: item.users,
+    }));
+  });
 
 /**
  *   @database: { 微信开发 }
@@ -119,6 +122,54 @@ export const getCbpm2022YouthByOpenid: (openid: string) => Promise<number> = ope
     },
   }).then(res => res.rows);
 
+const handlePaper = data => {
+  let result = {};
+  data.forEach(item => {
+    Object.keys(item).forEach(key => {
+      let dataItem = item[key];
+      let idx = Number(key.replace('q', '')) - 1;
+      dataItem.split(',').forEach(answer => {
+        if (!result[idx]) {
+          result[idx] = {};
+        }
+        if (!result[idx][answer]) {
+          result[idx][answer] = 0;
+        }
+        result[idx][answer]++;
+      });
+    });
+  });
+
+  let res = Object.keys(result).map(idx => {
+    let item = result[idx];
+    let title = Number(idx) + 1 + '.' + formData[idx].title;
+    let formItem = formData[idx].data;
+    let data = [];
+    let sum = R.sum(Object.values(item));
+
+    Object.keys(item).forEach(key => {
+      if (!formItem[key]) {
+        return;
+      }
+      let name = R.splitEvery(6, formItem[key]).join('\n');
+      if (formItem[key].length % 6 <= 3) {
+        name = name + `(${((item[key] / sum) * 100).toFixed(1)}%)`;
+      } else {
+        name = name + `\n(${((item[key] / sum) * 100).toFixed(1)}%)`;
+      }
+      data.push({
+        name,
+        value: item[key],
+      });
+    });
+    return { title, data };
+  });
+
+  //   console.log(result, res);
+
+  return res;
+};
+
 /**
  *   @database: { 微信开发 }
  *   @desc:     { 数据结果查询 }
@@ -126,4 +177,16 @@ export const getCbpm2022YouthByOpenid: (openid: string) => Promise<number> = ope
 export const getCbpm2022YouthResult = () =>
   axios({
     url: '/443/f96bb690d0.json',
-  }).then(res => res.data);
+  }).then(res => handlePaper(res.data));
+
+/**
+ *   @database: { 微信开发 }
+ *   @desc:     { 根据企业查询 }
+ */
+export const getCbpm2022YouthDetail = q1 =>
+  axios({
+    url: '/444/7bf794b65a.json',
+    params: {
+      q1,
+    },
+  }).then(res => handlePaper(res.data));

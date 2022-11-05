@@ -139,7 +139,7 @@ export const formData: IPaper[] = [
     充分了解十四五举措`,
   },
   {
-    title: '你最关心公司的哪些发面',
+    title: '你最关心公司的哪些方面',
     data: `生产经营状况
     机构改革
     人事变动

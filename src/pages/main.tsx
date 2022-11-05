@@ -80,6 +80,7 @@ const Index = ({ weixin, dispatch }) => {
       sex: weixin.sex,
       nickname: weixin.nickname,
       headimgurl: weixin.headimgurl,
+      q44: '无',
       ...params,
     };
     // console.log(param);
